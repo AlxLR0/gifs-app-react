@@ -1,15 +1,28 @@
-import axios from "axios";
 
-export const getGifsByQuery = async(query: string)=>{
+import { giphyApi } from "../api/giphy.api";
+import type { Gif } from "../interfaces/gif.interface";
+import type { GiphyResponse } from "../interfaces/giphy.response";
 
-    const response = await axios.get('https://api.giphy.com/v1/gifs/search',{
+export const getGifsByQuery = async(query: string): Promise<Gif[]>=>{
+
+    const response = await giphyApi<GiphyResponse>('/search',{
         params:{
             q:query,
             limit:10,
-            lang:'es'
-
+            
         }
     });
 
-    // fetch(`https://api.giphy.com/v1/gifs/search?api_key=XzA6oqALFxBHpWPxZhzaReQeabQJUCuG&q=${query}&limit=10&lang=es`);
+        const gifs: Gif[] = response.data.data.map((gif) => ({
+        id: gif.id,
+        title: gif.title,
+        url: gif.images.original.url,
+        width: Number(gif.images.original.width),
+            height: Number(gif.images.original.height),
+    }));
+
+        console.log({ gifs });
+
+        return gifs;
+
 }

@@ -1,19 +1,22 @@
 import { useState } from "react"
 import { GifList } from "./gifs/components/GifList"
 import { PreviousSearches } from "./gifs/components/PreviousSearches"
-import { mockGifs } from "./mock-data/gifs.mock"
+// import { mockGifs } from "./mock-data/gifs.mock"
 import { CustomHeader } from "./shared/components/CustomHeader"
 import { SearchBar } from "./shared/components/SearchBar"
+import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.actions"
+import type { Gif } from "./gifs/interfaces/gif.interface"
 
 export const GifsApp = () => {
 
-  const [previousTerms, setPreviousTerms] = useState(['ejemplo']);
+  const [gifs, setGifs] = useState<Gif[]>([]);
+  const [previousTerms, setPreviousTerms] = useState<string[]>([]);
 
   const handleTermClinked = (term: string)=>{
     console.log({term});
   }
 
-  const handleSearch= (query:string)=>{
+  const handleSearch= async(query:string)=>{
      query = query.trim().toLowerCase();
 
     if (query.length === 0) return;
@@ -24,6 +27,13 @@ export const GifsApp = () => {
 
     // const gifs = await getGifsByQuery(query);
     // setGifs(gifs);
+
+    const gifs= await getGifsByQuery(query);
+    
+    console.log({gifs});
+
+    setGifs(gifs);
+    
     
   }
 
@@ -38,7 +48,7 @@ export const GifsApp = () => {
         <PreviousSearches searches={previousTerms} onLabelClicked={handleTermClinked}></PreviousSearches>
 
         {/* gifs */}
-        <GifList gifs={mockGifs}></GifList>
+        <GifList gifs={gifs}></GifList>
     
     </>
   )
