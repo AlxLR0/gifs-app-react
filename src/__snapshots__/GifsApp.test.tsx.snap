@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GifsApp > debe renderizar ok 1`] = `
+<div>
+  <div
+    class="content-center"
+  >
+    <h1>
+      GIFs App
+    </h1>
+    <p>
+      Encuentra los mejores GIFs aquí
+    </p>
+  </div>
+  <div
+    class="search-container"
+  >
+    <input
+      placeholder="Buscar GIFs..."
+      type="text"
+      value=""
+    />
+    <button>
+      Buscar
+    </button>
+  </div>
+  <div
+    class="previous-searches"
+  >
+    <h2>
+      Busquedas anteriores
+    </h2>
+    <ul
+      class="previous-searches-list"
+    />
+  </div>
+  <div
+    class="gifs-container"
+  />
+</div>
+`;
